@@ -10,21 +10,21 @@ library(ggplot2)
 
 function_fill_na_wb <- function(df) {
   dfs <- data.frame()
-  n <- length(unique(df$countrycode)) 
+  n <- length(unique(df$Country)) 
   
   for (i in seq(1:n)) {
     print(i) 
-    ### loop each country code
-    uni_ctycode <- unique(df$countrycode)
-    print(uni_ctycode[i])
+    ### loop each country
+    uni_cty <- unique(df$Country)
+    print(uni_cty[i])
     
     df1 <- df %>%
-      filter(countrycode == uni_ctycode[i]) %>% ## loop each nation
+      filter(Country == uni_cty[i]) %>% ## loop each nation
       # gather(key = 'year', value =  'value', -c(1:6)) %>%
-      mutate(year =  Year) %>%
+      mutate(Year =  Year) %>%
       # dplyr::mutate(year = year(as.Date(Year, format="%Y"))) #%>%
-      mutate(value = as.numeric(value)) %>%
-      arrange(year) # %>% ## order by date
+      mutate(Value = as.numeric(value)) %>%
+      arrange(Year) # %>% ## order by date
     
     # m <- length(unique(df$SDG)) * length(unique(df$Year))
     # for (j in seq(1: m)) {
@@ -33,12 +33,12 @@ function_fill_na_wb <- function(df) {
     # }
 
     ### if too many NA, then keep as it is - may drop this data; if not too much, then interpolation
-    if (sum(is.na(df1$value)) > (length(df1$countrycode)-2)) {
+    if (sum(is.na(df1$Value)) > (length(df1$Country)-2)) {
       df1 <- df1 %>%
-        mutate(value_ks = value)} ## 
+        mutate(value_ks = Value)} ## 
     else {
       df1 <- df1 %>%
-        mutate(value_ks = na_interpolation(x = value, option = 'stine'))}
+        mutate(value_ks = na_interpolation(x = Value, option = 'stine'))}
 
     dfs <- rbind(dfs, df1)
     
@@ -56,8 +56,8 @@ function_fill_na_wb <- function(df) {
     # filter(CountryCode %in% df$CountryCode[sample(1:3, size = 3, replace = T)]) %>%
 
     ggplot()+
-    geom_line(aes(x = year, y = value),    color = 'blue', size = 6) +
-    geom_line(aes(x = year, y = value_ks), color = 'red', size = 2) +
+    geom_line(aes(x = Year, y = Value),    color = 'blue', size = 6) +
+    geom_line(aes(x = Year, y = value_ks), color = 'red', size = 2) +
     facet_wrap(~countrycode, scales = 'free_y') +
     # xlim(1990, 2005) +
     # ylim(0, 7*10^5)+

@@ -3,20 +3,19 @@
 ### 2020-10-13
 ### Yuqian Zhang
 
+# 
+# path <- rstudioapi::getSourceEditorContext()$path
+# dir  <- dirname(rstudioapi::getSourceEditorContext()$path); dir
+# setwd(dir)
+# getwd()
 
-path <- rstudioapi::getSourceEditorContext()$path
-dir  <- dirname(rstudioapi::getSourceEditorContext()$path); dir
-setwd(dir)
-getwd()
 
-library(dplyr)
-library(tidyr)
-library(ggplot2)
+source( file="script/reference.R" ); 
 
 
 # Visualization 1 - Box plot by calculated SDG over years
 
-SDG_15_Cal_2000_2018 <- read.csv("SDG_15_Cal_2000-2018.csv")
+SDG_15_Cal_2000_2018 <- read.csv("data/SDG_15_Cal_2000-2018.csv")
 str(SDG_15_Cal_2000_2018)
 unique(SDG_15_Cal_2000_2018$Year)
 
@@ -67,7 +66,7 @@ plot2
   
 # Visualization 2 - Scatter plot by SDG 15 indicator over years
 
-SDG_15_NoCal_2000_2018 <- read.csv("SDG_15_NoCal_2000-2018.csv")
+SDG_15_NoCal_2000_2018 <- read.csv("data/SDG_15_NoCal_2000-2018.csv")
 # str(SDG_15_NoCal_2000_2018)
 SDG_15_NoCal_2000_2018$year <- as.factor(SDG_15_NoCal_2000_2018$Year)
 
@@ -117,6 +116,36 @@ ggplot(data = iris, aes(x = Sepal.Length, y = Sepal.Width)) +
   geom_point(size = 3, aes(color=Species, shape=Species))
 
 
+
+# Visualization 3 - Scatter plot by SDG 15 indicator over years by country
+
+# Idea 6 - Scatter point
+# ind_analysis <- aggregate(SDG_15_NoCal_2000_2018[,10], 
+#                           list(SDG_15_NoCal_2000_2018$Year,SDG_15_NoCal_2000_2018$SDG), 
+#                           FUN = mean)
+# names(ind_analysis)[1] <- "Year"
+# names(ind_analysis)[2] <- "SDG"
+# names(ind_analysis)[3] <- "Value"
+
+# plot6 <- ggplot(data = SDG_15_Cal_2000_2018, aes(x=Year, y=Value_sum)) +
+#   geom_point(size = 2, aes(color=SDG)) +
+#   geom_line(aes(color=CountryCode)) +
+#   theme_bw() +
+#   theme(axis.text.x = element_text(color="black", size=9, angle=30, vjust=0.8)) +
+#   labs(title = "SDG 15 indicator Average Value Change over Years",
+#        subtitle = "92 Countries between 2000 and 2018",
+#        x = "Year",
+#        y = "SDG 15 Indicator Value");
+# 
+# # stat_smooth(method = lm, se=FALSE, aes(color=SDG));
+# plot6
+
+
+summary <- summarize (group_by(SDG_15_Cal_2000_2018, Country),
+           maxSDG = max(Value_sum),
+           minSDG = min(Value_sum),
+           diffSDG = maxSDG - minSDG)
+which.max(summary$diffSDG)
 
 
 

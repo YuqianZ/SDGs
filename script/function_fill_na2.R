@@ -12,8 +12,8 @@ function_fill_na_wb <- function(df) {
   dfs <- data.frame()
   
   # df <- test
-  n <- length(unique(df$CountryCode)); n
-  uni_ctylist <- unique(df$CountryCode)
+  n <- length(unique(df$Country)); n
+  uni_ctylist <- unique(df$Country)
   
   for (i in seq(1:n)) {
     # print("Country No.:")
@@ -22,7 +22,7 @@ function_fill_na_wb <- function(df) {
     print(uni_ctylist[i]) 
     
     # i = 1
-    dfi <- df %>% dplyr::filter(CountryCode == uni_ctylist[i])
+    dfi <- df %>% dplyr::filter(Country == uni_ctylist[i])
     
     ### number of SDG indicators
     n2 <- length(unique(dfi$SDG)); n2
@@ -36,14 +36,14 @@ function_fill_na_wb <- function(df) {
         # gather(key = 'year', value =  'value', -c(1:6)) %>%
         dplyr::mutate(year =  Year) %>%
         # dplyr::mutate(year = year(as.Date(Year, format="%Y"))) #%>%
-        dplyr::mutate(value = as.numeric(value)) %>%
+        dplyr::mutate(value = as.numeric(Value)) %>%
         dplyr::arrange(year) # %>% ## order by date
       
       ### if too many NA, then keep as it is - may drop this data; if not too much, then interpolation
-      if (sum(is.na(df1$value)) > (length(df1$CountryCode)-2)) {
+      if (sum(is.na(df1$value)) > (length(df1$Country)-2)) {
         df1 <- df1 %>%
           dplyr::mutate(value_ks = value) #%>%
-          # dplyr::arrange(SDG, CountryCode, year)
+          # dplyr::arrange(SDG, Country, year)
         } else {
           df1 <- df1 %>%
             dplyr::mutate(value_ks = na_interpolation(x = value, option = 'stine'))}
@@ -53,17 +53,18 @@ function_fill_na_wb <- function(df) {
     }
   }
   
-  view(dfs)
+  # view(dfs)
+  
   ### plot and examine the interpolation
   # sam <- sample(1:190, size = 20, replace = F) ## replace = repeat
   plot <- dfs %>%
     ### randomly choose 20 countries and plot
-    # filter(CountryCode %in% df$CountryCode[sample(1:3, size = 3, replace = T)]) %>% 
+    # filter(Country %in% df$Country[sample(1:3, size = 3, replace = T)]) %>% 
     
     ggplot()+
     geom_line(aes(x = year, y = value),    color = 'blue', size = 6) +
     geom_line(aes(x = year, y = value_ks), color = 'red',  size = 2) +
-    facet_grid(SDG~CountryCode, scales = 'free_y') +
+    facet_grid(SDG~Country, scales = 'free_y') +
     # xlim(1990, 2005) +
     # ylim(0, 7*10^5)+
     theme_bw()
@@ -74,7 +75,7 @@ function_fill_na_wb <- function(df) {
   # dfs_update <- dfs %>%
   #   select(-value) %>%
   #   spread(key = year, value = value_ks) %>%
-  #   # left_join(x=ctr_eora, y = ., by=c('country_eora', 'CountryCode')) ### make sure the same order 
+  #   # left_join(x=ctr_eora, y = ., by=c('country_eora', 'Country')) ### make sure the same order 
   # fname <- paste0(dir.output, iname, '_FILLNA.xlsx'); print(fname)
   # write.csv(x = dfs_update, file = fname, row.names = F)
   # write_xlsx(x = dfs_update, path = fname)
@@ -92,10 +93,10 @@ function_fill_na_wb <- function(df) {
 
 
 
-# if (sum(is.na(df1$value)) > (length(df1$CountryCode)-2)) {
+# if (sum(is.na(df1$value)) > (length(df1$Country)-2)) {
 #   df1 <- df1 %>%
 #     dplyr::mutate(value_ks = value) #%>%
-#   # dplyr::arrange(SDG, CountryCode, year)
+#   # dplyr::arrange(SDG, Country, year)
 # } else {df1 <- df1 %>%
 #   dplyr::mutate(value_ks = na_interpolation(x = value, option = 'stine'))}
 

@@ -3,38 +3,39 @@
 ### Yuqian Zhang
 
 
-path <- rstudioapi::getSourceEditorContext()$path
-dir  <- dirname(rstudioapi::getSourceEditorContext()$path); dir
-setwd(dir)
-getwd()
+# path <- rstudioapi::getSourceEditorContext()$path
+# dir  <- dirname(rstudioapi::getSourceEditorContext()$path); dir
+# setwd(dir)
+# getwd()
 
+source( file="script/reference.R" ); 
 
 # Library deployment
 
 library(plyr)
 library(tibble)
-library(tidyr)
+# library(tidyr)
 library(reshape2)
 library(writexl)
 library(tidyverse)
-library(ggplot2)
+# library(ggplot2)
 library(lubridate)
-library(dplyr)
+# library(dplyr)
 library(plm)
 
 
-SDG_15_finalclean <- read.csv("SDG_15_finalclean_all.csv")
+SDG_15_finalclean <- read.csv("data/SDG_15_finalclean_all.csv")
 str(SDG_15_finalclean)
 View(SDG_15_finalclean)
   # colnames(SDG_15_finalclean)
 SDG_15_finalclean$value_cal <- SDG_15_finalclean$fill_all_Nas
 colnames(SDG_15_finalclean)[1] <- "Country"
 SDG_15_NoCal_2000_2018 <- subset(SDG_15_finalclean, Year!=2019)
-write.csv(SDG_15_NoCal_2000_2018,"SDG_15_NoCal_2000-2018.csv")
+write.csv(SDG_15_NoCal_2000_2018,"data/SDG_15_NoCal_2000-2018.csv")
 
 
   
-SDG_15_weight <- read.csv("SDG 15 weight.csv")
+SDG_15_weight <- read.csv("data/SDG 15 weight.csv")
 str(SDG_15_weight)
 View(SDG_15_weight)
 colnames(SDG_15_weight)[1] <- "SDG"
@@ -111,7 +112,7 @@ str(SDG_15_Cal)
 SDG_15_Cal_2000_2018 <- subset(SDG_15_Cal, Year!=2019)
 View(SDG_15_Cal_2000_2018)
 str(SDG_15_Cal_2000_2018)
-write.csv(SDG_15_Cal_2000_2018,"SDG_15_Cal_2000-2018.csv")
+write.csv(SDG_15_Cal_2000_2018,"data/SDG_15_Cal_2000-2018.csv")
 
 
 
