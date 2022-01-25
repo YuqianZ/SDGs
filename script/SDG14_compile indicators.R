@@ -262,6 +262,47 @@ plot1 <- ggplot(data = SDG_14_sum_2000_2019) +
        y = "SDG 14 Value");
 plot1
 
+# Distribution of all country yearly SDG scores
+SDG_2000 <- subset(SDG_14_sum_2000_2019, Year == "2000")
+hist(SDG_2000$Value_sum)
+
+SDG_2004 <- subset(SDG_14_sum_2000_2019, Year == "2004")
+hist(SDG_2004$Value_sum)
+
+SDG_2008 <- subset(SDG_14_sum_2000_2019, Year == "2008")
+hist(SDG_2008$Value_sum)
+
+SDG_2012 <- subset(SDG_14_sum_2000_2019, Year == "2012")
+hist(SDG_2012$Value_sum)
+
+SDG_2016 <- subset(SDG_14_sum_2000_2019, Year == "2016")
+hist(SDG_2016$Value_sum)
+
+SDG_2019 <- subset(SDG_14_sum_2000_2019, Year == "2019")
+hist(SDG_2019$Value_sum)
+
+data_sdg14_2019 <- SDG_2019[with(SDG_2019, order(Value_sum)),]
+data_sdg14_2019[1:16,2]
+
+summary(data_sdg14_2019)
+Value_med <- median(data_sdg14_2019$Value_sum)
+data_sdg14_2019$Value_cal <- abs(data_sdg14_2019$Value_sum - Value_med)
+
+Value_med2 <- median(data_sdg14_2019$Value_cal)
+
+MAD <- Value_med2 * 1.4826
+lower <- Value_med - 2 * MAD
+upper <- Value_med + 2 * MAD
+
+data_sdg14_2019$deviate <- (data_sdg14_2019$Value_sum - Value_med) / MAD # error, because MAD = 0
+
+bright14 <- data_sdg14_2019$Country[data_sdg14_2019$Value_sum > upper]
+dark14 <- data_sdg14_2019$Country[data_sdg14_2019$Value_sum < lower]
+
+bright14
+dark14
+
+
 # Idea 2 - violin plot
 plot2 <- ggplot(data = SDG_14_sum_2000_2019) +
   geom_violin(mapping=aes(x=Year, y=Value_sum),
@@ -291,7 +332,7 @@ plot2
 
 
 # Visualization 2 - Scatter plot by SDG 15 indicator over years
-
+# SDG_14_Cal_2000_2019 <- read.csv("data/SDG_14_calfinal.csv")
 SDG_14_Cal_2000_2019$Year <- as.factor(SDG_14_Cal_2000_2019$Year)
 
 # Idea 4 - Scatter point
@@ -307,7 +348,7 @@ plot4 <- ggplot(data = ind_analysis, aes(x=Year, y=Value)) +
   geom_line(aes(color=SDG)) +
   theme_bw() +
   theme(axis.text.x = element_text(color="black", size=9, angle=30, vjust=0.8)) +
-  labs(title = "SDG 14 indicator Average Value Change over Years",
+  labs(title = "SDG 14 Indicator Average Values over Years",
        subtitle = "160 Countries between 2000 and 2019",
        x = "Year",
        y = "SDG 14 Indicator Value");
