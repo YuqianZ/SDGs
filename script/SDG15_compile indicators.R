@@ -19,9 +19,9 @@ library(lubridate)
 
 # Set working directory
 
-path <- rstudioapi::getSourceEditorContext()$path
-dir  <- dirname(rstudioapi::getSourceEditorContext()$path); dir
-setwd(dir)
+# path <- rstudioapi::getSourceEditorContext()$path
+# dir  <- dirname(rstudioapi::getSourceEditorContext()$path); dir
+setwd("G:/My Drive/MSU/Study/Research/My PhD/SDGs/SDG14&15/SDG/data")
 getwd()
 
 ##############################

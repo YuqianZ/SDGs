@@ -8,7 +8,8 @@ getwd()
 list.files()
 library(dplyr)
 
-csv <- 'SDG_15_cleanmerged.csv'
+csv <- 'data/SDG_15_cleanmerged.csv'
+View(csv)
 df <- read.csv(csv, stringsAsFactors = F) %>%
   dplyr::rename("CountryCode" = "countrycode")
 View(df)

@@ -4,3 +4,4 @@
 .gitignore
 doNotSync/
 
+.Rproj.user
