@@ -14,7 +14,7 @@ df1
 
 df1['Year'] = df1['Year'].astype(str)
 
-df1['Key'] = df1['Entity']+df1['Code']+df1['SDG']+df1['Year']
+df1['Key'] = df1['Code']+df1['SDG']+df1['Year']
 df1
 
 dict1 = dict(zip(df1['Key'],df1['Value']))
@@ -25,7 +25,7 @@ df2 = pd.DataFrame(N_empty_full_country_sdg_year)
 df2
 
 df2['Year'] = df2['Year'].astype(str)
-df2['Key'] = df2['Entity']+df2['Code']+df2['SDG']+df2['Year']
+df2['Key'] = df2['Code']+df2['SDG']+df2['Year']
 df2
 
 df2['Value_true'] = df2['Key'].map(dict1)

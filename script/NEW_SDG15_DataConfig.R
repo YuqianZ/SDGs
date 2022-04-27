@@ -738,16 +738,16 @@ source("script/function_fill_na_continuous.R")
 dat1_filled <- function_fill_na_continuous(dat1) ### add return() in function
 dat1_filled <- dat1_filled[,c(2:5,8)]
 names(dat1_filled)[5] <- "Value"
-write.csv(dat1_filled, "data/SDSN/SDG_15_continuous_filled.csv")
+# write.csv(dat1_filled, "data/SDSN/SDG_15_continuous_filled.csv")
 
-## Manually fill binary data of sub/indicators
+# Manually fill binary data of sub/indicators
 source("script/function_fill_na_binary.R")
 dat2_filled <- function_fill_na_binary(dat2) ### add return() in function
 dat2_filled <- dat2_filled[,c(2:5,7)]
-write.csv(dat2_filled, "data/SDSN/SDG_15_binary_filled.csv")
+# write.csv(dat2_filled, "data/SDSN/SDG_15_binary_filled.csv")
  
 SDG_15_all_filled <- rbind(dat1_filled, dat2_filled)
-write.csv(SDG_15_all_filled, "data/SDSN/SDG_15_complete.csv")
+# write.csv(SDG_15_all_filled, "data/SDSN/SDG_15_complete.csv")
 
 
 ##################
@@ -755,6 +755,7 @@ write.csv(SDG_15_all_filled, "data/SDSN/SDG_15_complete.csv")
 ##################
 
 ## Calculate SDG scores based on sub/indicators
+SDG_15_all_filled <- read.csv("data/SDSN/SDG_15_complete.csv")
 
 # create a new column for SDG_main indicator
 SDG_15_all_filled$SDG_main <- substr(SDG_15_all_filled$SDG,1,4)
@@ -770,7 +771,7 @@ df_overall_total <- data.frame()
 n <- length(unique(SDG_15_all_filled$Code)) ## Code - county iso code
 uni_code <- unique(SDG_15_all_filled$Code) ## unique country list by code
 
-# loop through each country and calculate their SDG scores by sub and main indicaotrs seperately
+# loop through each country and calculate their SDG scores by sub and main indicators seperately
 for (i in seq(1:n)) {
     print(i) 
     ### loop each county Code
@@ -799,10 +800,12 @@ SDG_15_score_by_main_indicator <- df_main_total[,c(1:5)]
 
 ## SDG 15 overall score by country
 SDG_15_score_overall <- df_overall_total
-# write.csv(SDG_15_score_by_sub_indicator, "data/SDSN/SDG_15_score_by_sub_indicator.csv")
+# write.csv(SDG_15_score_overall, "data/SDSN/SDG_15_score_overall.csv")
 
 
-
+# summary(SDG_15_score_by_sub_indicator)
+# summary(SDG_15_score_by_main_indicator)
+# summary(SDG_15_score_overall)
 
 
 # ## Test -----------------------------------------------------------------------
@@ -852,10 +855,10 @@ plot1
 
 
 ### Filled data ###
-N_SDG_15_2000_2020_all <- read.csv("data/SDSN/SDG_15_all_unfill.csv_FILLNA_test_all.csv")
+N_SDG_15_2000_2020_all <- read.csv("data/SDSN/SDG_15_complete.csv")
 N_SDG_15_2000_2020_all$Year <- as.factor(N_SDG_15_2000_2020_all$Year)
 # Idea 1 - Scatter point for SDG by indicators
-ind_analysis2 <- aggregate(N_SDG_15_2000_2020_all[,8], 
+ind_analysis2 <- aggregate(N_SDG_15_2000_2020_all[,6], 
                           list(N_SDG_15_2000_2020_all$Year,N_SDG_15_2000_2020_all$SDG), 
                           FUN = mean)
 names(ind_analysis2)[1] <- "Year"
@@ -928,6 +931,9 @@ plot4
 ### SDG 15 variation country ### -----------------------------------------------
 
 # Idea 3 - boxplot
+
+SDG_15_score_overall <- read.csv("data/SDSN/SDG_15_score_overall.csv")
+
 SDG_15_score_overall$Year <- as.factor(SDG_15_score_overall$Year)
 plot5 <- ggplot(data = SDG_15_score_overall) +
   stat_boxplot(mapping=aes(x=Year, y=Value),
@@ -983,7 +989,7 @@ plot6
 # plot3
 
 
-unique(N_SDG_15_2000_2020_all$SDG)
-summary(N_SDG_15_2000_2020_all$value[N_SDG_15_2000_2020_all$SDG=="15_2_1_1"])
-
-hist(N_SDG_15_2000_2020_all$value[N_SDG_15_2000_2020_all$SDG=="15_2_1_1"], breaks = 6)
+# unique(N_SDG_15_2000_2020_all$SDG)
+# summary(N_SDG_15_2000_2020_all$value[N_SDG_15_2000_2020_all$SDG=="15_2_1_1"])
+# 
+# hist(N_SDG_15_2000_2020_all$value[N_SDG_15_2000_2020_all$SDG=="15_2_1_1"], breaks = 6)
