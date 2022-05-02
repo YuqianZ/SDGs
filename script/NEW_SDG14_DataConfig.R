@@ -32,18 +32,6 @@ empty_year <- data.frame(matrix(ncol=2, nrow=21))
 colnames(empty_year) <- c("year", "value")
 empty_year$year <- interest_year
 
-# yearlist <- data.frame(matrix(ncol=1, nrow=21))
-# colnames(yearlist) <- "Year"
-# yearlist$Year <- interest_year
-#
-# sdg <- c("15_1_1", "15_1_2_1", "15_1_2_2", "15_2_1_1", "15_2_1_2",
-#          "15_2_1_3", "15_4_1",   "15_4_2",   "15_5_1",   "15_6_1_1",
-#          "15_6_1_2", "15_6_1_3", "15_6_1_4", "15_6_1_5", "15_8_1_1",
-#          "15_8_1_2", "15_9_1",   "15_9_2")
-# sdglist <- data.frame(matrix(ncol=1, nrow=18))
-# colnames(sdglist) <- "SDG"
-# sdglist$SDG <- sdg
-
 
 country_sdg <- countrylist %>%
   add_column("14_1_1_1" = NA, "14_1_1_2" = NA, "14_2_1" = NA, "14_5_1" = NA,
@@ -360,7 +348,7 @@ N_SDG_14_comb_00_20 <- subset(N_SDG_14_combraw, N_SDG_14_combraw$Year %in% inter
 # # the above data set was achieved through Python pandas dictionary, neatly!
 # 
 # 
-# # N_SDG_15_comb_00_20 <- read.csv("data/SDSN/N_SDG_15_comb_00_20.csv")
+# # N_SDG_14_comb_00_20 <- read.csv("data/SDSN/N_SDG_14_comb_00_20.csv")
 # 
 # ### The new dataset has been created from Python
 # 
@@ -374,7 +362,7 @@ names(N_SDG_14_2000_2020_clean)[5] <- "value"
 
 
 ##################
-# SDG_15_fill_NA #
+# SDG_14_fill_NA #
 ##################
 
 # load data
@@ -485,7 +473,7 @@ SDG_14_score_overall <- df_overall_total
 ## Test -----------------------------------------------------------------------
 
 # create a subset for only ABW country from full data set
-df_ABW <- subset(SDG_14_all_filled, SDG_15_all_filled$Code=="ABW")
+df_ABW <- subset(SDG_14_all_filled, SDG_14_all_filled$Code=="ABW")
 
 # Calculate mean by SDG_sub indicator
 df_sub <- aggregate(Value~Country+Code+Year+SDG_sub, data=df_ABW, mean, na.rm=TRUE)
@@ -556,7 +544,7 @@ plot2                                         ### Problem needs to look into!!!
 
 ## By main indicator
 SDG_14_score_by_main_indicator <- read.csv("data/SDSN2/SDG_14_score_by_main_indicator.csv")
-SDG_14_score_by_main_indicator$Year <- as.factor(SDG_14_score_by_main_indicator$Year)
+# SDG_14_score_by_main_indicator$Year <- as.factor(SDG_14_score_by_main_indicator$Year)
 
 # Idea 1 - Scatter point for SDG by indicators
 ind_analysis <- aggregate(SDG_14_score_by_main_indicator$Value,
@@ -568,6 +556,7 @@ names(ind_analysis)[3] <- "Value"
 
 plot3 <- ggplot(data = ind_analysis, aes(x=Year, y=Value)) +
   geom_point(size = 2, aes(color=SDG)) +
+  scale_x_continuous(breaks = seq(2000, 2020, by = 1)) +
   geom_line(aes(color=SDG)) +
   theme_bw() +
   theme(axis.text.x = element_text(color="black", size=9, angle=30, vjust=0.8)) +
@@ -580,7 +569,7 @@ plot3
 
 ## By sub indicator
 SDG_14_score_by_sub_indicator <- read.csv("data/SDSN2/SDG_14_score_by_sub_indicator.csv")
-SDG_14_score_by_sub_indicator$Year <- as.factor(SDG_14_score_by_sub_indicator$Year)
+# SDG_14_score_by_sub_indicator$Year <- as.factor(SDG_14_score_by_sub_indicator$Year)
 
 # Idea 1 - Scatter point for SDG by indicators
 ind_analysis1 <- aggregate(SDG_14_score_by_sub_indicator$Value,
@@ -592,6 +581,7 @@ names(ind_analysis1)[3] <- "Value"
 
 plot4 <- ggplot(data = ind_analysis1, aes(x=Year, y=Value)) +
   geom_point(size = 2, aes(color=SDG)) +
+  scale_x_continuous(breaks = seq(2000, 2020, by = 1)) +
   geom_line(aes(color=SDG)) +
   theme_bw() +
   theme(axis.text.x = element_text(color="black", size=9, angle=30, vjust=0.8)) +
@@ -622,7 +612,7 @@ plot5 <- ggplot(data = SDG_14_score_overall) +
   theme(axis.text.x = element_text(color="black", size=9, angle=30, vjust=0.8)) +
   # scale_x_discrete(labels = year) +
   labs(title = "SDG 14 Score Change over Years",
-       subtitle = "249 Countries between 2000 and 2020",
+       subtitle = "249 Countries/Regions between 2000 and 2020",
        x = "Year",
        y = "SDG 14 Score");
 plot5
@@ -641,6 +631,193 @@ plot6 <- ggplot(data = SDG_14_score_overall) +
        y = "SDG 14 Score");
 plot6
 
+# Idea 5 - SDG score line graph with SD as shaded area
+
+ind_analysis3 <- aggregate(SDG_14_score_overall$Value, 
+                           list(SDG_14_score_overall$Year,SDG_14_score_overall$SDG), 
+                           FUN = mean)
+names(ind_analysis3)[1] <- "Year"
+names(ind_analysis3)[2] <- "SDG"
+names(ind_analysis3)[3] <- "Value"
+
+sd <- aggregate(SDG_14_score_overall$Value, 
+                list(SDG_14_score_overall$Year,SDG_14_score_overall$SDG),
+                FUN = sd)
+
+ind_analysis3$sd <- sd$x
+ind_analysis3$lower <- ind_analysis3$Value - 0.5*ind_analysis3$sd
+ind_analysis3$upper <- ind_analysis3$Value + 0.5*ind_analysis3$sd
 
 
+plot7 <- ggplot(data = ind_analysis3, aes(x = Year, y = Value)) +
+  geom_ribbon(aes(ymin = lower,ymax = upper), alpha = 0.2, fill = "royalblue") +
+  geom_line(color='royalblue') +
+  # scale_fill_manual(values='seagreen', name="fill") + 
+  geom_point(color='royalblue') +
+  scale_x_continuous(breaks = seq(2000, 2020, by = 1))+
+  theme_bw() +
+  theme(axis.text.x = element_text(color="black", size=9, angle=30, vjust=0.8)) +
+  # scale_x_discrete(labels = year) +
+  labs(title = "SDG 14 Score Change over Years",
+       subtitle = "249 Countries between 2000 and 2020",
+       x = "Year",
+       y = "SDG 14 Score");
+plot7
+
+
+
+
+### SDG 14 map of all countries/regions ----------------------------------------
+
+## Selected years of SDG scores for all countries, 2000, 2005, 2010, 2015, 2020
+SDG_14_score_overall <- read.csv("data/SDSN2/SDG_14_score_overall.csv")
+# SDG_14_score_overall_wide <- spread(SDG_14_score_overall, key = Year, value = Value)
+SDG_14_score_overall_2000 <- SDG_14_score_overall[SDG_14_score_overall$Year=='2000',]
+SDG_14_score_overall_2005 <- SDG_14_score_overall[SDG_14_score_overall$Year=='2005',]
+SDG_14_score_overall_2010 <- SDG_14_score_overall[SDG_14_score_overall$Year=='2010',]
+SDG_14_score_overall_2015 <- SDG_14_score_overall[SDG_14_score_overall$Year=='2015',]
+SDG_14_score_overall_2020 <- SDG_14_score_overall[SDG_14_score_overall$Year=='2020',]
+
+# Create a data set of country's SDG change (slope of scores over years)
+dat <- data.table(SDG_14_score_overall)
+SDG_14_change <- dat[,as.list(coef(lm(Value~Year))), by=Code]
+names(SDG_14_change)[3] <- 'Change'
+# summary(SDG_14_change)
+
+## shp ---
+
+# head(shp)
+shp <- ne_countries(scale = 'medium', type = 'countries', returnclass = 'sf') %>%
+  dplyr::select(name, type, iso_a3, economy, income_grp) 
+
+# Remove Antarctica
+shp_nATA <- subset(shp, name != "Antarctica")
+names(shp_nATA)[3] <- 'Code'
+
+# Merge shp file with SDG score in 2000
+shp_nATA_2000 <- merge(shp_nATA, SDG_14_score_overall_2000, by='Code')
+
+plot8 <- ggplot(shp_nATA_2000) +
+  geom_sf(aes(fill=Value), size=0.1) + 
+  ggtitle("Global SDG 14 in 2000") +
+  scale_fill_distiller(palette='YlGnBu', direction = 1) +
+  theme(
+    axis.text = element_blank(),
+    axis.line = element_blank(),
+    axis.ticks = element_blank(),
+    panel.border = element_blank(),
+    panel.grid = element_blank(),
+    axis.title = element_blank(),
+    panel.background = element_rect(fill='white'),
+    plot.title = element_text(hjust=0.5));
+plot8
+
+# Merge shp file with SDG score in 2005
+shp_nATA_2005 <- merge(shp_nATA, SDG_14_score_overall_2005, by='Code')
+
+plot9 <- ggplot(shp_nATA_2005) +
+  geom_sf(aes(fill=Value), size=0.1) + 
+  ggtitle("Global SDG 14 in 2005") +
+  scale_fill_distiller(palette='YlGnBu', direction = 1) +
+  theme(
+    axis.text = element_blank(),
+    axis.line = element_blank(),
+    axis.ticks = element_blank(),
+    panel.border = element_blank(),
+    panel.grid = element_blank(),
+    axis.title = element_blank(),
+    panel.background = element_rect(fill='white'),
+    plot.title = element_text(hjust=0.5));
+plot9
+
+# Merge shp file with SDG score in 2010
+shp_nATA_2010 <- merge(shp_nATA, SDG_14_score_overall_2010, by='Code')
+
+plot10 <- ggplot(shp_nATA_2010) +
+  geom_sf(aes(fill=Value), size=0.1) + 
+  ggtitle("Global SDG 14 in 2010") +
+  scale_fill_distiller(palette='YlGnBu', direction = 1) +
+  theme(
+    axis.text = element_blank(),
+    axis.line = element_blank(),
+    axis.ticks = element_blank(),
+    panel.border = element_blank(),
+    panel.grid = element_blank(),
+    axis.title = element_blank(),
+    panel.background = element_rect(fill='white'),
+    plot.title = element_text(hjust=0.5));
+plot10
+
+# Merge shp file with SDG score in 2015
+shp_nATA_2015 <- merge(shp_nATA, SDG_14_score_overall_2015, by='Code')
+
+plot11 <- ggplot(shp_nATA_2015) +
+  geom_sf(aes(fill=Value), size=0.1) + 
+  ggtitle("Global SDG 15 in 2015") +
+  scale_fill_distiller(palette='YlGnBu', direction = 1) +
+  theme(
+    axis.text = element_blank(),
+    axis.line = element_blank(),
+    axis.ticks = element_blank(),
+    panel.border = element_blank(),
+    panel.grid = element_blank(),
+    axis.title = element_blank(),
+    panel.background = element_rect(fill='white'),
+    plot.title = element_text(hjust=0.5));
+plot11
+
+
+# Merge shp file with SDG score in 2020
+shp_nATA_2020 <- merge(shp_nATA, SDG_14_score_overall_2020, by='Code')
+
+plot12 <- ggplot(shp_nATA_2020) +
+  geom_sf(aes(fill=Value), size=0.1) + 
+  ggtitle("Global SDG 15 in 2020") +
+  scale_fill_distiller(palette='YlGnBu', direction = 1) +
+  theme(
+    axis.text = element_blank(),
+    axis.line = element_blank(),
+    axis.ticks = element_blank(),
+    panel.border = element_blank(),
+    panel.grid = element_blank(),
+    axis.title = element_blank(),
+    panel.background = element_rect(fill='white'),
+    plot.title = element_text(hjust=0.5));
+plot12
+
+
+# Merge shp file with SDG score change
+shp_nATA_change <- merge(shp_nATA, SDG_14_change, by='Code')
+
+plot13 <- ggplot(shp_nATA_change) +
+  geom_sf(aes(fill=Change), size=0.1) + 
+  ggtitle("Global SDG 14 change between 2000 and 2020") +
+  scale_fill_distiller(palette='PuBu', direction = 1) +
+  theme(
+    axis.text = element_blank(),
+    axis.line = element_blank(),
+    axis.ticks = element_blank(),
+    panel.border = element_blank(),
+    panel.grid = element_blank(),
+    axis.title = element_blank(),
+    panel.background = element_rect(fill='white'),
+    plot.title = element_text(hjust=0.5));
+plot13
+
+
+# plot(shp['iso_a3'])
+# # shp_iso_na <- shp %>%
+# #   dplyr::filter(is.na(iso_a3))
+# # shp_iso_na$name
+# 
+# # unique(shp$iso_a3)
+# 
+# shp %>%
+#   ggplot() +
+#   geom_sf(aes(fill = group), size = 0.1, color = 'gray50')
+# 
+# # diff <- setdiff(shp$iso_a3, SDG_14_score_overall$Code)
+# # diff
+# # 
+# # shp$name[is.na(shp$iso_a3)]
 

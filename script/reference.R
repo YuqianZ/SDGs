@@ -12,3 +12,22 @@ library(imputeTS) ### for na_locf fuction
 library(writexl)
 library(tidyverse)
 library(lubridate)
+library(maps)
+
+library(maptools)
+library(mapproj)
+library(rgeos)
+library(rgdal)
+library(jsonlite)
+library(RCurl)
+
+# library(rworldmap)
+# library(sp)
+
+library(rnaturalearthdata)
+library(rnaturalearth)
+library(sf)
+
+# library(Matrix)
+# library(lme4)
+library(data.table)
