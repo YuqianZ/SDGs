@@ -1,0 +1,158 @@
+﻿Code,Country,Group
+ATG,Antigua and Barbuda,HHC_H
+BHS,Bahamas,HHC_H
+BRB,Barbados,HHC_H
+BRN,Brunei Darussalam,HHC_H
+CHL,Chile,HHC_H
+CYP,Cyprus,HHC_H
+ESP,Spain,HHC_H
+GRC,Greece,HHC_H
+ITA,Italy,HHC_H
+JPN,Japan,HHC_H
+KNA,Saint Kitts and Nevis,HHC_H
+MLT,Malta,HHC_H
+NZL,New Zealand,HHC_H
+PRT,Portugal,HHC_H
+ALB,Albania,HHC_L
+ARM,Armenia,HHC_L
+AZE,Azerbaijan,HHC_L
+BLZ,Belize,HHC_L
+CPV,Cabo Verde,HHC_L
+CRI,Costa Rica,HHC_L
+CUB,Cuba,HHC_L
+DJI,Djibouti,HHC_L
+DMA,Dominica,HHC_L
+DOM,Dominican Republic,HHC_L
+ECU,Ecuador,HHC_L
+ETH,Ethiopia,HHC_L
+FJI,Fiji,HHC_L
+GEO,Georgia,HHC_L
+GRD,Grenada,HHC_L
+GTM,Guatemala,HHC_L
+HND,Honduras,HHC_L
+HTI,Haiti,HHC_L
+IDN,Indonesia,HHC_L
+JAM,Jamaica,HHC_L
+KGZ,Kyrgyzstan,HHC_L
+KHM,Cambodia,HHC_L
+LAO,Lao People's Democratic Republic,HHC_L
+LBN,Lebanon,HHC_L
+LBR,Liberia,HHC_L
+LCA,Saint Lucia,HHC_L
+LKA,Sri Lanka,HHC_L
+MAR,Morocco,HHC_L
+MDG,Madagascar,HHC_L
+MEX,Mexico,HHC_L
+MMR,Myanmar,HHC_L
+MUS,Mauritius,HHC_L
+MYS,Malaysia,HHC_L
+NIC,Nicaragua,HHC_L
+NPL,Nepal,HHC_L
+PAN,Panama,HHC_L
+PHL,Philippines,HHC_L
+SLB,Solomon Islands,HHC_L
+SLE,Sierra Leone,HHC_L
+SLV,El Salvador,HHC_L
+STP,Sao Tome and Principe,HHC_L
+SWZ,Swaziland,HHC_L
+THA,Thailand,HHC_L
+TJK,Tajikistan,HHC_L
+TUN,Tunisia,HHC_L
+VCT,Saint Vincent and the Grenadines,HHC_L
+VNM,Viet Nam,HHC_L
+VUT,Vanuatu,HHC_L
+WSM,Samoa,HHC_L
+YEM,Yemen,HHC_L
+AUS,Australia,LHC_H
+FRA,France,LHC_H
+HRV,Croatia,LHC_H
+ISR,Israel,LHC_H
+OMN,Oman,LHC_H
+RUS,Russian Federation,LHC_H
+SAU,Saudi Arabia,LHC_H
+SVN,Slovenia,LHC_H
+URY,Uruguay,LHC_H
+USA,United States of America,LHC_H
+AFG,Afghanistan,LHC_L
+ARG,Argentina,LHC_L
+BEN,Benin,LHC_L
+BGD,Bangladesh,LHC_L
+BGR,Bulgaria,LHC_L
+BIH,Bosnia and Herzegovina,LHC_L
+BOL,Bolivia,LHC_L
+BRA,Brazil,LHC_L
+CHN,China,LHC_L
+CIV,Cote d'Ivoire,LHC_L
+CMR,Cameroon,LHC_L
+COL,Colombia,LHC_L
+DZA,Algeria,LHC_L
+EGY,Egypt,LHC_L
+GHA,Ghana,LHC_L
+GIN,Guinea,LHC_L
+IND,India,LHC_L
+IRN,Iran,LHC_L
+IRQ,Iraq,LHC_L
+JOR,Jordan,LHC_L
+KAZ,Kazakhstan,LHC_L
+KEN,Kenya,LHC_L
+MKD,Macedonia,LHC_L
+MOZ,Mozambique,LHC_L
+MWI,Malawi,LHC_L
+NAM,Namibia,LHC_L
+NGA,Nigeria,LHC_L
+PAK,Pakistan,LHC_L
+PER,Peru,LHC_L
+PRY,Paraguay,LHC_L
+RWA,Rwanda,LHC_L
+TGO,Togo,LHC_L
+TKM,Turkmenistan,LHC_L
+TZA,United Republic of Tanzania,LHC_L
+UGA,Uganda,LHC_L
+UZB,Uzbekistan,LHC_L
+VEN,Venezuela,LHC_L
+ZAF,South Africa,LHC_L
+ZMB,Zambia,LHC_L
+ZWE,Zimbabwe,LHC_L
+ARE,United Arab Emirates,NHC_H
+AUT,Austria,NHC_H
+BEL,Belgium,NHC_H
+CAN,Canada,NHC_H
+CHE,Switzerland,NHC_H
+CZE,Czechia,NHC_H
+DEU,Germany,NHC_H
+DNK,Denmark,NHC_H
+EST,Estonia,NHC_H
+FIN,Finland,NHC_H
+GBR,United Kingdom,NHC_H
+IRL,Ireland,NHC_H
+ISL,Iceland,NHC_H
+KOR,Republic of Korea,NHC_H
+KWT,Kuwait,NHC_H
+LTU,Lithuania,NHC_H
+LUX,Luxembourg,NHC_H
+LVA,Latvia,NHC_H
+NLD,Netherlands,NHC_H
+NOR,Norway,NHC_H
+SVK,Slovakia,NHC_H
+SWE,Sweden,NHC_H
+TTO,Trinidad and Tobago,NHC_H
+AGO,Angola,NHC_L
+BFA,Burkina Faso,NHC_L
+BLR,Belarus,NHC_L
+BWA,Botswana,NHC_L
+CAF,Central African Republic,NHC_L
+COG,Congo,NHC_L
+GAB,Gabon,NHC_L
+GMB,Gambia,NHC_L
+GNB,Guinea-Bissau,NHC_L
+GUY,Guyana,NHC_L
+HUN,Hungary,NHC_L
+LSO,Lesotho,NHC_L
+MLI,Mali,NHC_L
+MNG,Mongolia,NHC_L
+NER,Niger,NHC_L
+ROU,Romania,NHC_L
+SEN,Senegal,NHC_L
+SUR,Suriname,NHC_L
+TCD,Chad,NHC_L
+UKR,Ukraine,NHC_L
