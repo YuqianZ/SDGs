@@ -1360,9 +1360,9 @@ ind_analysis5$Group[ind_analysis5$Group=="LHC_L"] <- "Low Hotspot (<50%), Low In
 ind_analysis5$Group[ind_analysis5$Group=="NHC_H"] <- "No Hotspot (0%), High Income"
 ind_analysis5$Group[ind_analysis5$Group=="NHC_L"] <- "No Hotspot (0%), Low Income"
 
-# sd <- aggregate(SDG_14_score_overall_cat$Value, 
-#                 list(SDG_14_score_overall_cat$Year,SDG_14_score_overall_cat$SDG, 
-#                      SDG_14_score_overall_cat$Group), 
+# sd <- aggregate(SDG_15_score_overall_cat$Value, 
+#                 list(SDG_15_score_overall_cat$Year,SDG_15_score_overall_cat$SDG, 
+#                      SDG_15_score_overall_cat$Group), 
 #                 FUN = sd)
 # 
 # ind_analysis5$sd <- sd$x
@@ -1675,6 +1675,73 @@ plot13 <- ggplot(shp_nATA_change) +
     panel.background = element_rect(fill='white'),
     plot.title = element_text(hjust=0.5));
 plot13
+
+
+## change between 2000 and 2015
+SDG_15_2000_2015 <- SDG_15_score_overall_2000
+SDG_15_2000_2015$Value_change <- SDG_15_score_overall_2015$Value - SDG_15_score_overall_2000$Value
+
+# Merge shp file with SDG score change
+shp_nATA_change_2000_2015 <- merge(shp_nATA, SDG_15_2000_2015, by='Code')
+
+plot21 <- ggplot(shp_nATA_change_2000_2015) +
+  geom_sf(aes(fill=Value_change), size=0.1) + 
+  ggtitle("Global SDG 15 change between 2000 and 2015") +
+  scale_fill_distiller(palette='RdYlGn', direction = 1, limits=c(-5,40),
+                       name='Score change') +
+  theme(
+    axis.text = element_blank(),
+    axis.line = element_blank(),
+    axis.ticks = element_blank(),
+    panel.border = element_blank(),
+    panel.grid = element_blank(),
+    axis.title = element_blank(),
+    panel.background = element_rect(fill='white'),
+    plot.title = element_text(hjust=0.5));
+# plot21
+
+plot21.2 <- addSmallLegend(plot21)
+plot21.2
+
+# summary(SDG_15_2000_2015$Value_change)
+
+## change between 2015 and 2020
+SDG_15_2015_2020 <- SDG_15_score_overall_2015
+SDG_15_2015_2020$Value_change <- SDG_15_score_overall_2020$Value - SDG_15_score_overall_2015$Value
+
+# Merge shp file with SDG score change
+shp_nATA_change_2015_2020 <- merge(shp_nATA, SDG_15_2015_2020, by='Code')
+
+plot22 <- ggplot(shp_nATA_change_2015_2020) +
+  geom_sf(aes(fill=Value_change), size=0.1) + 
+  ggtitle("Global SDG 15 change between 2015 and 2020") +
+  scale_fill_distiller(palette='RdYlGn', direction = 1, limits=c(-5,40),
+                       name='Score change') +
+  theme(
+    axis.text = element_blank(),
+    axis.line = element_blank(),
+    axis.ticks = element_blank(),
+    panel.border = element_blank(),
+    panel.grid = element_blank(),
+    axis.title = element_blank(),
+    panel.background = element_rect(fill='white'),
+    plot.title = element_text(hjust=0.5));
+# plot22
+
+plot22.2 <- addSmallLegend(plot22)
+plot22.2
+
+# summary(SDG_15_2015_2020$Value_change)
+
+# Change legend size function
+addSmallLegend <- function(myPlot, pointSize = 10, textSize = 8, spaceLegend = 0.8) {
+  myPlot +
+    guides(shape = guide_legend(override.aes = list(size = pointSize)),
+           color = guide_legend(override.aes = list(size = pointSize))) +
+    theme(legend.title = element_text(size = textSize+2), 
+          legend.text  = element_text(size = textSize),
+          legend.key.size = unit(spaceLegend, "lines"))
+}
 
 # Arrange plots into one as output
 # plot14 <- grid.arrange(plot8, plot9, plot10, plot11, plot12,

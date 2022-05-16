@@ -572,6 +572,10 @@ SDG_14_all_filled <- rbind(dat1_filled, dat2_filled)
 ## Calculate SDG scores based on sub/indicators
 SDG_14_all_filled <- read.csv("data/SDSN2/SDG_14_complete.csv")
 
+# ## Look into Kazakhstan
+# SDG_14_Kazakhstan_filled <- SDG_14_all_filled[SDG_14_all_filled$Country == "Kazakhstan",]
+# # Here is the reason for the problem - Too many NAs!!! 
+
 # create a new column for SDG_main indicator
 SDG_14_all_filled$SDG_main <- substr(SDG_14_all_filled$SDG,1,4)
 # create a new column for SDG_sub indicator
@@ -914,6 +918,10 @@ SDG_14_score_overall_2010 <- SDG_14_score_overall[SDG_14_score_overall$Year=='20
 SDG_14_score_overall_2015 <- SDG_14_score_overall[SDG_14_score_overall$Year=='2015',]
 SDG_14_score_overall_2020 <- SDG_14_score_overall[SDG_14_score_overall$Year=='2020',]
 
+
+# ## Look into Kazakhstan
+# SDG_14_Kazakhstan <- SDG_14_score_overall[SDG_14_score_overall$Country == "Kazakhstan",]
+
 # Create a data set of country's SDG change (slope of scores over years)
 dat <- data.table(SDG_14_score_overall)
 SDG_14_change <- dat[,as.list(coef(lm(Value~Year))), by=Code]
@@ -1084,6 +1092,62 @@ plot13 <- ggplot(shp_nATA_change) +
     panel.background = element_rect(fill='white'),
     plot.title = element_text(hjust=0.5));
 plot13
+
+## change between 2000 and 2015
+SDG_14_2000_2015 <- SDG_14_score_overall_2000
+SDG_14_2000_2015$Value_change <- SDG_14_score_overall_2015$Value - SDG_14_score_overall_2000$Value
+
+# Merge shp file with SDG score change
+shp_nATA_change_2000_2015 <- merge(shp_nATA, SDG_14_2000_2015, by='Code')
+
+plot21 <- ggplot(shp_nATA_change_2000_2015) +
+  geom_sf(aes(fill=Value_change), size=0.1) + 
+  ggtitle("Global SDG 14 change between 2000 and 2015") +
+  scale_fill_distiller(palette='RdBu', direction = 1, limits=c(-36,50),
+                       name='Score change') +
+  theme(
+    axis.text = element_blank(),
+    axis.line = element_blank(),
+    axis.ticks = element_blank(),
+    panel.border = element_blank(),
+    panel.grid = element_blank(),
+    axis.title = element_blank(),
+    panel.background = element_rect(fill='white'),
+    plot.title = element_text(hjust=0.5));
+plot21
+
+plot21.2 <- addSmallLegend(plot21)
+plot21.2
+
+# summary(SDG_14_2000_2015$Value_change)
+
+## change between 2015 and 2020
+SDG_14_2015_2020 <- SDG_14_score_overall_2015
+SDG_14_2015_2020$Value_change <- SDG_14_score_overall_2020$Value - SDG_14_score_overall_2015$Value
+
+# Merge shp file with SDG score change
+shp_nATA_change_2015_2020 <- merge(shp_nATA, SDG_14_2015_2020, by='Code')
+
+plot22 <- ggplot(shp_nATA_change_2015_2020) +
+  geom_sf(aes(fill=Value_change), size=0.1) + 
+  ggtitle("Global SDG 14 change between 2015 and 2020") +
+  scale_fill_distiller(palette='RdBu', direction = 1, limits=c(-36,50),
+                       name='Score change') +
+  theme(
+    axis.text = element_blank(),
+    axis.line = element_blank(),
+    axis.ticks = element_blank(),
+    panel.border = element_blank(),
+    panel.grid = element_blank(),
+    axis.title = element_blank(),
+    panel.background = element_rect(fill='white'),
+    plot.title = element_text(hjust=0.5));
+plot22
+
+plot22.2 <- addSmallLegend(plot22)
+plot22.2
+
+summary(SDG_14_2015_2020$Value_change)
 
 ### Selection analysis ######
 
