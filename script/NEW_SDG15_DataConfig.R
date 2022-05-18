@@ -1348,6 +1348,7 @@ names(ind_analysis3)[1] <- "Year"
 names(ind_analysis3)[2] <- "SDG"
 names(ind_analysis3)[3] <- "Value"
 
+
 sd <- aggregate(SDG_15_score_overall$Value, 
                    list(SDG_15_score_overall$Year,SDG_15_score_overall$SDG),
                    FUN = sd)
