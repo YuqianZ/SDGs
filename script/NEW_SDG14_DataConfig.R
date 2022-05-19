@@ -563,6 +563,7 @@ dat2_filled <- dat2_filled[,c(2:5,7)]
 
 SDG_14_all_filled <- rbind(dat1_filled, dat2_filled)
 # write.csv(SDG_14_all_filled, "data/SDSN2/SDG_14_complete.csv")
+# SDG_14_all_filled <- read.csv("data/SDSN2/SDG_14_complete.csv")
 
 
 ## Remove countries with more than 20% missing values ---
@@ -572,7 +573,7 @@ df1 <- data.frame()
 df_keep <- data.frame()
 n <- length(unique(SDG_14_all_filled$Code)) ## Code - county iso code
 uni_code <- unique(SDG_14_all_filled$Code) ## unique country list by code
-missing_threshold  <- 0.5 # Can change the acceptance value between 0.1 - 0.5, the higher means allowing more missing value
+missing_threshold  <- 0.37 # Can change the acceptance value between 0.1 - 0.5, the higher means allowing more missing value
 
 # loop through each country and calculate their SDG scores by sub and main indicaotrs seperately
 for (i in seq(1:n)) {
@@ -610,9 +611,17 @@ for (i in seq(1:n)) {
 # # length(unique(SDG_14_all_filled_60$Code)) # Country number: 113
 # # write.csv(SDG_14_all_filled_60, "data/SDSN2/SDG_14_complete_60.csv")
 
-SDG_14_all_filled_50 <- df_keep
+# SDG_14_all_filled_50 <- df_keep
 # length(unique(SDG_14_all_filled_50$Code)) # Country number: 147
 # write.csv(SDG_14_all_filled_50, "data/SDSN2/SDG_14_complete_50.csv")
+
+# SDG_14_all_filled_65 <- df_keep
+# # length(unique(SDG_14_all_filled_65$Code)) # Country number: 82
+# # write.csv(SDG_14_all_filled_65, "data/SDSN2/SDG_14_complete_65.csv")
+
+SDG_14_all_filled_63 <- df_keep
+# # length(unique(SDG_14_all_filled_63$Code)) # Country number: 100
+# # write.csv(SDG_14_all_filled_63, "data/SDSN2/SDG_14_complete_63.csv")
 
 
 ##################
@@ -620,7 +629,7 @@ SDG_14_all_filled_50 <- df_keep
 ##################
 
 ## Calculate SDG scores based on sub/indicators
-SDG_14_all_filled <- read.csv("data/SDSN2/SDG_14_complete_50.csv")
+SDG_14_all_filled <- read.csv("data/SDSN2/SDG_14_complete_63.csv")
 
 # ## Look into Kazakhstan
 # SDG_14_Kazakhstan_filled <- SDG_14_all_filled[SDG_14_all_filled$Country == "Kazakhstan",]
@@ -662,14 +671,14 @@ for (i in seq(1:n)) {
 }
 
 SDG_14_score_by_sub_indicator <- df_sub_total[,c(1:5)]
-# write.csv(SDG_14_score_by_sub_indicator, "data/SDSN2/SDG_14_score_by_sub_indicator_50.csv")
+# write.csv(SDG_14_score_by_sub_indicator, "data/SDSN2/SDG_14_score_by_sub_indicator_63.csv")
 
 SDG_14_score_by_main_indicator <- df_main_total[,c(1:5)]
-# write.csv(SDG_14_score_by_main_indicator, "data/SDSN2/SDG_14_score_by_main_indicator_50.csv")
+# write.csv(SDG_14_score_by_main_indicator, "data/SDSN2/SDG_14_score_by_main_indicator_63.csv")
 
 ## SDG 14 overall score by country
 SDG_14_score_overall <- df_overall_total
-# write.csv(SDG_14_score_overall, "data/SDSN2/SDG_14_score_overall_50.csv")
+# write.csv(SDG_14_score_overall, "data/SDSN2/SDG_14_score_overall_63.csv")
 
 
 
@@ -746,7 +755,7 @@ plot2                                         ### Problem needs to look into!!!
 ### SDG 14 variation by each indicator with modified data ### ------------------
 
 ## By target
-SDG_14_score_by_main_indicator <- read.csv("data/SDSN2/SDG_14_score_by_main_indicator_50.csv")
+SDG_14_score_by_main_indicator <- read.csv("data/SDSN2/SDG_14_score_by_main_indicator_63.csv")
 # SDG_14_score_by_main_indicator$Year <- as.factor(SDG_14_score_by_main_indicator$Year)
 
 # Idea 1 - Scatter point for SDG by target
@@ -784,7 +793,7 @@ plot3
 
 
 ## By indicator
-SDG_14_score_by_sub_indicator <- read.csv("data/SDSN2/SDG_14_score_by_sub_indicator_50.csv")
+SDG_14_score_by_sub_indicator <- read.csv("data/SDSN2/SDG_14_score_by_sub_indicator_63.csv")
 # SDG_14_score_by_sub_indicator$Year <- as.factor(SDG_14_score_by_sub_indicator$Year)
 
 # Idea 1 - Scatter point for SDG by indicators
@@ -813,7 +822,7 @@ plot4
 
 ### SDG 14 variation country ### -----------------------------------------------
 
-SDG_14_score_overall <- read.csv("data/SDSN2/SDG_14_score_overall_50.csv")
+SDG_14_score_overall <- read.csv("data/SDSN2/SDG_14_score_overall_63.csv")
 
 # # Idea 3 - boxplot
 # 
@@ -903,7 +912,9 @@ SDG_14_score_overall_cat <- merge(SDG_14_score_overall, Country_category, by="Co
 SDG_14_score_overall_cat <- SDG_14_score_overall_cat[,c(1,3,7,4:6)]
 
 # table(SDG_14_score_overall_cat$Group)/21
-# length(unique(SDG_14_score_overall_cat$Code)) # Country number: 115
+# HHC_H HHC_L LHC_H LHC_L NHC_H NHC_L 
+# 12    31     7    19    17     5 
+# length(unique(SDG_14_score_overall_cat$Code)) # Country number: 91
 
 # Idea 6 - SDG score line graph with SD as shaded area
 
@@ -965,7 +976,7 @@ plot17
 ### SDG 14 map of all countries/regions ----------------------------------------
 
 ## Selected years of SDG scores for all countries, 2000, 2005, 2010, 2015, 2020
-SDG_14_score_overall <- read.csv("data/SDSN2/SDG_14_score_overall_50.csv")
+SDG_14_score_overall <- read.csv("data/SDSN2/SDG_14_score_overall_63.csv")
 # SDG_14_score_overall_wide <- spread(SDG_14_score_overall, key = Year, value = Value)
 SDG_14_score_overall_2000 <- SDG_14_score_overall[SDG_14_score_overall$Year=='2000',]
 SDG_14_score_overall_2005 <- SDG_14_score_overall[SDG_14_score_overall$Year=='2005',]
@@ -1017,7 +1028,7 @@ shp_nATA_2000 <- merge(shp_nATA, SDG_14_score_overall_2000, by='Code', all=TRUE)
 plot8 <- ggplot(shp_nATA_2000) +
   geom_sf(aes(fill=Value), size=0.1) + 
   ggtitle("Global SDG 14 in 2000") +
-  scale_fill_distiller(palette='YlGnBu', direction = 1, limits=c(0,80), na.value = 'grey') +
+  scale_fill_distiller(palette='YlGnBu', direction = 1, limits=c(15,80), na.value = 'grey') +
   theme(
     axis.text = element_blank(),
     axis.line = element_blank(),
@@ -1036,7 +1047,7 @@ shp_nATA_2005 <- merge(shp_nATA, SDG_14_score_overall_2005, by='Code', all=TRUE)
 plot9 <- ggplot(shp_nATA_2005) +
   geom_sf(aes(fill=Value), size=0.1) + 
   ggtitle("Global SDG 14 in 2005") +
-  scale_fill_distiller(palette='YlGnBu', direction = 1, limits=c(0,80), na.value = 'grey') +
+  scale_fill_distiller(palette='YlGnBu', direction = 1, limits=c(15,80), na.value = 'grey') +
   theme(
     axis.text = element_blank(),
     axis.line = element_blank(),
@@ -1055,7 +1066,7 @@ shp_nATA_2010 <- merge(shp_nATA, SDG_14_score_overall_2010, by='Code', all=TRUE)
 plot10 <- ggplot(shp_nATA_2010) +
   geom_sf(aes(fill=Value), size=0.1) + 
   ggtitle("Global SDG 14 in 2010") +
-  scale_fill_distiller(palette='YlGnBu', direction = 1, limits=c(0,80), na.value = 'grey') +
+  scale_fill_distiller(palette='YlGnBu', direction = 1, limits=c(15,80), na.value = 'grey') +
   theme(
     axis.text = element_blank(),
     axis.line = element_blank(),
@@ -1074,7 +1085,7 @@ shp_nATA_2015 <- merge(shp_nATA, SDG_14_score_overall_2015, by='Code', all=TRUE)
 plot11 <- ggplot(shp_nATA_2015) +
   geom_sf(aes(fill=Value), size=0.1) + 
   ggtitle("Global SDG 14 in 2015") +
-  scale_fill_distiller(palette='YlGnBu', direction = 1, limits=c(0,80), na.value = 'grey') +
+  scale_fill_distiller(palette='YlGnBu', direction = 1, limits=c(15,80), na.value = 'grey') +
   theme(
     axis.text = element_blank(),
     axis.line = element_blank(),
@@ -1111,7 +1122,7 @@ shp_nATA_2020 <- merge(shp_nATA, SDG_14_score_overall_2020, by='Code', all=TRUE)
 plot12 <- ggplot(shp_nATA_2020) +
   geom_sf(aes(fill=Value), size=0.1) + 
   ggtitle("Global SDG 14 in 2020") +
-  scale_fill_distiller(palette='YlGnBu', direction = 1, limits=c(0,80), na.value = 'grey') +
+  scale_fill_distiller(palette='YlGnBu', direction = 1, limits=c(15,80), na.value = 'grey') +
   theme(
     axis.text = element_blank(),
     axis.line = element_blank(),
@@ -1126,7 +1137,7 @@ plot12
 
 # Merge shp file with SDG score change
 shp_nATA_change <- merge(shp_nATA, SDG_14_change, by='Code', all=TRUE)
-# summary(shp_nATA_change$Change_rate)
+summary(shp_nATA_change$Change_rate)
 
 # shp_nATA_change_analysis <- shp_nATA_change[, c(1,2,7)]
 # summary(shp_nATA_change_analysis)
@@ -1161,12 +1172,12 @@ SDG_14_2000_2015$Value_change <- SDG_14_score_overall_2015$Value - SDG_14_score_
 
 # Merge shp file with SDG score change
 shp_nATA_change_2000_2015 <- merge(shp_nATA, SDG_14_2000_2015, by='Code', all=TRUE)
-summary(shp_nATA_change_2000_2015$Value_change)
+# summary(shp_nATA_change_2000_2015$Value_change)
 
 plot21 <- ggplot(shp_nATA_change_2000_2015) +
   geom_sf(aes(fill=Value_change), size=0.1) + 
   ggtitle("Global SDG 14 change between 2000 and 2015") +
-  scale_fill_distiller(palette='RdBu', direction = 1, limits=c(-20,40),
+  scale_fill_distiller(palette='RdBu', direction = 1, limits=c(-10,40),
                        name='Score change', na.value = 'grey') +
   theme(
     axis.text = element_blank(),
@@ -1179,6 +1190,16 @@ plot21 <- ggplot(shp_nATA_change_2000_2015) +
     plot.title = element_text(hjust=0.5));
 # plot21
 
+# Change legend size function
+addSmallLegend <- function(myPlot, pointSize = 10, textSize = 8, spaceLegend = 0.8) {
+  myPlot +
+    guides(shape = guide_legend(override.aes = list(size = pointSize)),
+           color = guide_legend(override.aes = list(size = pointSize))) +
+    theme(legend.title = element_text(size = textSize+2), 
+          legend.text  = element_text(size = textSize),
+          legend.key.size = unit(spaceLegend, "lines"))
+}
+
 plot21.2 <- addSmallLegend(plot21)
 plot21.2
 
@@ -1190,12 +1211,12 @@ SDG_14_2015_2020$Value_change <- SDG_14_score_overall_2020$Value - SDG_14_score_
 
 # Merge shp file with SDG score change
 shp_nATA_change_2015_2020 <- merge(shp_nATA, SDG_14_2015_2020, by='Code', all=TRUE)
-summary(shp_nATA_change_2015_2020$Value_change)
+# summary(shp_nATA_change_2015_2020$Value_change)
 
 plot22 <- ggplot(shp_nATA_change_2015_2020) +
   geom_sf(aes(fill=Value_change), size=0.1) + 
   ggtitle("Global SDG 14 change between 2015 and 2020") +
-  scale_fill_distiller(palette='RdBu', direction = 1, limits=c(-20,40),
+  scale_fill_distiller(palette='RdBu', direction = 1, limits=c(-10,40),
                        name='Score change', na.value = 'grey') +
   theme(
     axis.text = element_blank(),
@@ -1228,17 +1249,20 @@ country_code_use <- unique(SDG_14_score_overall$Code)
 Country_full_select <- Country_full[Country_full$Code %in% country_code_use,]
 Country_full_select <- Country_full_select[,c(1,3)]
 Country_full <- merge(countrylist,  Country_full_select, by="Code", all=TRUE)
+
 # table(Country_full$Group)
+# HHC_H HHC_L LHC_H LHC_L NHC_H NHC_L 
+# 12    31     7    19    17     5 
 
 # unique(Country_category$Group)
 # Give meaningful names to categories
-Country_full$Group[Country_full$Group=="HHC_H"] <- "High Hotspot (>50%), High Income (14)"
-Country_full$Group[Country_full$Group=="HHC_L"] <- "High Hotspot (>50%), Low Income (40)"
-Country_full$Group[Country_full$Group=="LHC_H"] <- "Low Hotspot (<50%), High Income (9)"
-Country_full$Group[Country_full$Group=="LHC_L"] <- "Low Hotspot (<50%), Low Income (26)"
-Country_full$Group[Country_full$Group=="NHC_H"] <- "No Hotspot (0%), High Income (18)"
-Country_full$Group[Country_full$Group=="NHC_L"] <- "No Hotspot (0%), Low Income (8)"
-Country_full$Group[is.na(Country_full$Group)] <- "Uncategorized - No Data (n=134)"
+Country_full$Group[Country_full$Group=="HHC_H"] <- "High Hotspot (>50%), High Income (12)"
+Country_full$Group[Country_full$Group=="HHC_L"] <- "High Hotspot (>50%), Low Income (31)"
+Country_full$Group[Country_full$Group=="LHC_H"] <- "Low Hotspot (<50%), High Income (7)"
+Country_full$Group[Country_full$Group=="LHC_L"] <- "Low Hotspot (<50%), Low Income (19)"
+Country_full$Group[Country_full$Group=="NHC_H"] <- "No Hotspot (0%), High Income (17)"
+Country_full$Group[Country_full$Group=="NHC_L"] <- "No Hotspot (0%), Low Income (5)"
+Country_full$Group[is.na(Country_full$Group)] <- "Uncategorized - No Data (n=158)"
 
 # Categorized country map
 # Merge shp file with SDG score change
@@ -1259,18 +1283,7 @@ plot99 <- ggplot(shp_nATA_cat) +
     axis.title = element_blank(),
     panel.background = element_rect(fill='white'),
     plot.title = element_text(hjust=-0.5));
-plot99
-
-# Change legend size function
-addSmallLegend <- function(myPlot, pointSize = 10, textSize = 8, spaceLegend = 0.8) {
-  myPlot +
-    guides(shape = guide_legend(override.aes = list(size = pointSize)),
-           color = guide_legend(override.aes = list(size = pointSize))) +
-    theme(legend.title = element_text(size = textSize+2), 
-          legend.text  = element_text(size = textSize),
-          legend.key.size = unit(spaceLegend, "lines"))
-}
-
+# plot99
 
 plot100 <- addSmallLegend(plot99)
 plot100

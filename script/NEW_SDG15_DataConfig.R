@@ -1014,16 +1014,16 @@ dat2_filled <- dat2_filled[,c(2:5,7)]
  
 SDG_15_all_filled <- rbind(dat1_filled, dat2_filled)
 # write.csv(SDG_15_all_filled, "data/SDSN/SDG_15_complete.csv")
+# SDG_15_all_filled <- read.csv("data/SDSN/SDG_15_complete.csv")
 
-
-## Remove countries with more than 20% missing values ---
+## Remove countries with more than ??% missing values ---
 
 # create empty data frames for later use
 df1 <- data.frame()
 df_keep <- data.frame()
 n <- length(unique(SDG_15_all_filled$Code)) ## Code - county iso code
 uni_code <- unique(SDG_15_all_filled$Code) ## unique country list by code
-missing_threshold  <- 0.5 # Can change the acceptance value between 0.1 - 0.5, the higher means allowing more missing value
+missing_threshold  <- 0.35 # Can change the acceptance value between 0.1 - 0.5, the higher means allowing more missing value
 
 # loop through each country and calculate their SDG scores by sub and main indicaotrs seperately
 for (i in seq(1:n)) {
@@ -1064,6 +1064,10 @@ for (i in seq(1:n)) {
 SDG_15_all_filled_50 <- df_keep
 # length(unique(SDG_15_all_filled_50$Code)) # Country number: 246
 # write.csv(SDG_15_all_filled_50, "data/SDSN/SDG_15_complete_50.csv")
+
+# SDG_15_all_filled_65 <- df_keep
+# length(unique(SDG_15_all_filled_65$Code)) # Country number: 241
+# write.csv(SDG_15_all_filled_65, "data/SDSN/SDG_15_complete_65.csv")
 
 
 
